@@ -1,6 +1,6 @@
 import 'package:almanac/pages/category_page.dart';
-import 'package:almanac/pages/landing_page.dart';
 import 'package:almanac/pages/login_page.dart';
+import 'package:almanac/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -26,8 +26,9 @@ class Almanac extends StatelessWidget {
       title: 'Almanac',
       initialRoute: '/',
       routes: {
-        '/': (context) => LandingPage(),
-        '/login': (context) => LoginPage(),
+        '/onboarding': (context) => LoginPage(),
+        '/': (context) => LoginPage(),
+        '/login': (context) => LandingPage(),
         '/explore': (context) => CategoryPage(),
       },
     );
