@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -20,132 +21,92 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: SafeArea(
         child: PageView(
           controller: _controller,
-          children: [MyPage1Widget(), MyPage2Widget(), MyPage3Widget()],
+          children: [
+            OnboardingPageWidget(
+              stepTitle: 'Choose a Farmer',
+              stepDescription:
+                  'What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?',
+              imageUrl:
+                  'https://cdni.iconscout.com/illustration/premium/thumb/concept-based-illustration-of-go-green-1958662-1653082.png',
+              controller: _controller,
+            ),
+            OnboardingPageWidget(
+              stepTitle: 'Pick your plant starter',
+              stepDescription:
+                  'What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?',
+              imageUrl:
+                  'https://images-na.ssl-images-amazon.com/images/I/71we73QU5GL._AC_SX466_.jpg',
+              controller: _controller,
+            ),
+            OnboardingPageWidget(
+              stepTitle: 'Watch your plant grows',
+              stepDescription:
+                  'What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book it has?',
+              imageUrl:
+                  'https://media3.giphy.com/media/QaMK791mZtQiOOF4oT/giphy.gif',
+              controller: _controller,
+            )
+          ],
         ),
       ),
     );
   }
 }
 
-class MyPage1Widget extends StatelessWidget {
+class OnboardingPageWidget extends StatelessWidget {
+  final String stepTitle;
+  final String stepDescription;
+  final String imageUrl;
+  final PageController controller;
+
+  const OnboardingPageWidget(
+      {Key key,
+      this.stepTitle,
+      this.stepDescription,
+      this.imageUrl,
+      this.controller})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        Row(
-          children: [
-            MyBox(darkGreen, height: 50),
-          ],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Center(
+          child: Container(
+            width: 300,
+            height: 300,
+            child: Image.network(imageUrl),
+            // decoration: BoxDecoration(
+            //   // color: darkBlue,
+            //   image: DecorationImage(
+            //     image: NetworkImage(imageUrl),
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
+          ),
         ),
-        Row(
-          children: [
-            MyBox(lightGreen),
-            MyBox(lightGreen),
-          ],
+        Text(
+          stepTitle,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
-        MyBox(mediumGreen, text: 'PageView 1'),
-        Row(
-          children: [
-            MyBox(lightGreen, height: 200),
-            MyBox(lightGreen, height: 200),
-          ],
+        Padding(
+          padding: EdgeInsets.only(right: 30, left: 30),
+          child: Text(
+            stepDescription,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+            textAlign: TextAlign.center,
+          ),
         ),
+        Container(
+          child: SmoothPageIndicator(
+            controller: controller,
+            count: 3,
+            effect: ExpandingDotsEffect(activeDotColor: Colors.teal),
+          ),
+        )
       ],
-    );
-  }
-}
-
-class MyPage2Widget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: [
-            MyBox(darkBlue, height: 50),
-            MyBox(darkBlue, height: 50),
-          ],
-        ),
-        Row(
-          children: [
-            MyBox(lightBlue),
-            MyBox(lightBlue),
-          ],
-        ),
-        MyBox(mediumBlue, text: 'PageView 2'),
-        Row(
-          children: [
-            MyBox(lightBlue),
-            MyBox(lightBlue),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class MyPage3Widget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: [
-            MyBox(darkRed),
-            MyBox(darkRed),
-          ],
-        ),
-        MyBox(mediumRed, text: 'PageView 3'),
-        Row(
-          children: [
-            MyBox(lightRed),
-            MyBox(lightRed),
-            MyBox(lightRed),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-const lightBlue = Color(0xff00bbff);
-const mediumBlue = Color(0xff00a2fc);
-const darkBlue = Color(0xff0075c9);
-
-final lightGreen = Colors.green.shade300;
-final mediumGreen = Colors.green.shade600;
-final darkGreen = Colors.green.shade900;
-
-final lightRed = Colors.red.shade300;
-final mediumRed = Colors.red.shade600;
-final darkRed = Colors.red.shade900;
-
-class MyBox extends StatelessWidget {
-  final Color color;
-  final double height;
-  final String text;
-
-  MyBox(this.color, {this.height, this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.all(10),
-        color: color,
-        height: (height == null) ? 150 : height,
-        child: (text == null)
-            ? null
-            : Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 50,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-      ),
     );
   }
 }
