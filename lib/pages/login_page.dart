@@ -1,3 +1,4 @@
+import 'package:almanac/pages/category_page.dart';
 import 'package:almanac/pages/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,13 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   loginButton('Continue with Google', () => print('Google')),
-                  loginButton('Continue with Apple', () => print('Apple')),
+                  loginButton(
+                      'Continue with Apple',
+                      () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CategoryPage(),
+                          ))),
                   loginButton(
                       'Explore',
                       () => Navigator.push(

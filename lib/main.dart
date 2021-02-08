@@ -24,7 +24,7 @@ class Almanac extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Almanac',
-      initialRoute: '/',
+      initialRoute: '/explore',
       routes: {
         '/onboarding': (context) => LoginPage(),
         '/': (context) => LoginPage(),

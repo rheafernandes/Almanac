@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends StatefulWidget {
   final String cardTitle;
   final bool isFavourite;
   final String url;
 
   const CategoryCard({Key key, this.cardTitle, this.isFavourite, this.url})
       : super(key: key);
+
+  @override
+  _CategoryCardState createState() =>
+      _CategoryCardState(cardTitle, url, isFavourite);
+}
+
+class _CategoryCardState extends State<CategoryCard> {
+  final String cardTitle;
+  final String url;
+  bool isFavourite;
+  IconData iconData;
+
+  _CategoryCardState(this.cardTitle, this.url, this.isFavourite);
+
+  @override
+  void initState() {
+    print(isFavourite);
+    iconData = isFavourite == true ? Icons.favorite : Icons.favorite_border;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +45,20 @@ class CategoryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                isFavourite == true
-                    ? Icon(
-                        Icons.favorite,
-                        color: Colors.teal.withOpacity(1.0),
-                      )
-                    : Icon(
-                        Icons.favorite_border,
-                        color: Colors.teal.withOpacity(1.0),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isFavourite = !isFavourite;
+                      iconData = isFavourite == true
+                          ? Icons.favorite
+                          : Icons.favorite_border;
+                    });
+                  },
+                  child: Icon(
+                    iconData,
+                    color: Colors.teal.withOpacity(1.0),
+                  ),
+                ),
                 Text(cardTitle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))
               ]),
